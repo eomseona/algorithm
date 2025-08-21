@@ -6,16 +6,23 @@
  * @return {number[][]}
  */
 var floodFill = function(image, sr, sc, color) {
-    if(image[sr][sc] == color) return image;
-    fill(image, sr, sc, color, image[sr][sc]);
+    const rows = image.length;
+    const cols = image[0].length;
+    const originalColor = image[sr][sc];
+
+    if (originalColor === color) return image;
+
+    function dfs(r, c) {
+        if (image[r][c] === originalColor) {
+            image[r][c] = color;
+
+            if (r >= 1) dfs(r - 1, c);       // Up
+            if (r + 1 < rows) dfs(r + 1, c); // Down
+            if (c >= 1) dfs(r, c - 1);       // Left
+            if (c + 1 < cols) dfs(r, c + 1); // Right
+        }
+    }
+
+    dfs(sr, sc);
     return image;
-}
-var fill = function(image, sr, sc, color, cur) {
-    if(sr < 0 || sr >= image.length || sc < 0 || sc >= image[0].length) return;
-    if(cur != image[sr][sc]) return;
-    image[sr][sc] = color;
-    fill(image, sr-1, sc, color, cur);
-    fill(image, sr+1, sc, color, cur);
-    fill(image, sr, sc-1, color, cur);
-    fill(image, sr, sc+1, color, cur);
 };
