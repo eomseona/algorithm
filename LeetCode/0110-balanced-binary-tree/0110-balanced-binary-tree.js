@@ -22,5 +22,5 @@ var isBalanced = function(root) {
         return [isBalanced, 1 + Math.max(leftHeight, rightHeight)];
     }
     
-    return dfs(root)[0];    
+    return dfs(root)[0];  
 };
